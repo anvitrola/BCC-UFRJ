@@ -99,4 +99,12 @@ public class ContaCorrenteTest {
                 assertEquals("O CPF cadastrado na conta deve ser o mesmo que o do correntista", cpfTeste, contaDaMaria.getCpfDoCorrentista(), cpfTeste);
         }
 
+        @Test 
+        public void testarQuantidadeDeTransacoesDeTodasAsContas(){
+                contaDoJoao.sacar(10);
+                contaDoJoao.receberDepositoEmDinheiro(30);
+                contaDaMaria.receberDepositoEmDinheiro(10);
+                assertEquals("O número de transações de todas as contas deve ser gerado corretamente", ContaCorrente.getQuantidadeDeTransacoesDeTodasAsContas(), 3);
+        }
+
 }

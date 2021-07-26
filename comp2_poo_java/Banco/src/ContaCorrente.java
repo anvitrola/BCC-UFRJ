@@ -1,10 +1,10 @@
 import java.util.ArrayList;
-import java.util.Date;
+//import java.util.Date;
 
 public class ContaCorrente {
 
     private final int numero;
-    private final int cpfCorrentista;
+    private final long cpfCorrentista;
 
     private Correntista correntista;
 
