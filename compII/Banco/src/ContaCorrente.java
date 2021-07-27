@@ -52,32 +52,39 @@ public class ContaCorrente {
 
     public String getExtrato() {
         String resultado = "";
+
         for (int i = 0; i < transacoes.size(); i++) {
             resultado += transacoes.get(i) + "\n";
         }
+
         return resultado;
     }
 
-    /**
-     * Retorna a quantidade total de transações do banco, ou seja, de todas as
-     * contas correntes que já foram criadas.
-     *
-     * @return o total de transações
-     */
     public static int getQuantidadeDeTransacoesDeTodasAsContas() {
         return quantidadeDeTransacoesDeTodasAsContas;
     }
 
     public void sacar(float valor) {
         if (valor > this.saldoEmReais) {
-            throw new Error("Saldo insuficiente para realizar a transação");
+            throw new Error("Saldo insuficiente para realizar a transação.");
         }
+
         this.saldoEmReais -= valor;
         this.transacoes.add("Saque de" + valor + "efetuado com sucesso.");
+
         quantidadeDeTransacoesDeTodasAsContas++;
     }
 
     public void efetuarTransferecia(ContaCorrente contaDestino, float valor) {
-        // ToDo IMPLEMENT ME!!!
+        if (valor > this.saldoEmReais) {
+            throw new Error("Saldo insuficiente para realizar a transação");
+        } else if (valor <= 0) {
+            throw new Error("O valor deve ser maior que 0 (zero) para que a transação seja efetivada.");
+        }
+
+        this.saldoEmReais-= valor;
+        contaDestino.receberDepositoEmDinheiro(valor);
+        
+        quantidadeDeTransacoesDeTodasAsContas++;
     }
 }
