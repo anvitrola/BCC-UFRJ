@@ -1,4 +1,4 @@
-<img src="./cover/minerva.png" alt="Logo da UFRJ" width="300px"/>
+<img src="./_images/minerva.png" alt="Logo da UFRJ" width="300px"/>
 
 # Anaspath UFRJ/BCC <small>2021 ~</small>
 
