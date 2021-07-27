@@ -1,12 +1,10 @@
 <img src="./_images/minerva.png" alt="Logo da UFRJ" width="300px"/>
 
-# Anaspath UFRJ/BCC <small>2021 ~</small>
+# Bacharelado em Ciência Da Computação <small>2021 ~</small>
 
-> Documentação de códigos feitos no curso Bacharelado em Ciência da Computação.
+> Documentação dos códigos de um percurso
 
-- Simple and lightweight
-- No statically built html files
-- Multiple themes
+- por Ana Vitória Viana, desenvolvedora front-end
 
 [GitHub](https://github.com/anvitrola/BCC-UFRJ)
-[Get Started](#docsify)
+[LinkedIn](https://www.linkedin.com/in/anvitrola/)
