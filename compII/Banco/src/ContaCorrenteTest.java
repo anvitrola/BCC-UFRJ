@@ -31,22 +31,30 @@ public class ContaCorrenteTest {
 
         @Test
         public void testarSaldoInicialDaConta() {
-                assertEquals("Toda conta, ao ser criada, deve começar com saldo de R$10,00.", 10.0, saldoInicial,
-                                FLOAT_DELTA);
+                assertEquals("Toda conta, ao ser criada, deve começar com saldo de R$10,00.", 
+                10.0, 
+                saldoInicial,
+                FLOAT_DELTA);
         }
 
         @Test
         public void testarRecebimentoDepositoParaValoresValidos() {
                 contaDoJoao.receberDepositoEmDinheiro(50);
-                assertEquals("O saldo da conta deve ser atualizado após receber um depósito", saldoInicial + 50,
-                                contaDoJoao.getSaldoEmReais(), FLOAT_DELTA);
+
+                assertEquals("O saldo da conta deve ser atualizado após receber um depósito.", 
+                saldoInicial + 50,
+                contaDoJoao.getSaldoEmReais(), 
+                FLOAT_DELTA);
         }
 
         @Test
         public void testarRecebimentoDepositoParaValoresNegativos() {
                 contaDoJoao.receberDepositoEmDinheiro(-200);
-                assertEquals("Depósitos de valores negativos devem ser solenemente ignorados", saldoInicial,
-                                contaDoJoao.getSaldoEmReais(), FLOAT_DELTA);
+
+                assertEquals("Depósitos de valores negativos devem ser solenemente ignorados.", 
+                saldoInicial,
+                contaDoJoao.getSaldoEmReais(), 
+                FLOAT_DELTA);
         }
 
         @Test
@@ -54,21 +62,23 @@ public class ContaCorrenteTest {
                 String extratoAntes = contaDoJoao.getExtrato();
 
                 contaDoJoao.receberDepositoEmDinheiro(0);
-                assertEquals("Depósitos de valor zero devem ser ignorados", 
+                assertEquals("Depósitos de valor zero devem ser ignorados.", 
                 saldoInicial, 
                 contaDoJoao.getSaldoEmReais(),
                 FLOAT_DELTA);
 
                 String extratoDepois = contaDoJoao.getExtrato();
 
-                assertEquals("Depósitos ignorados não devem sequer constar do extrato", extratoAntes, extratoDepois);
-
+                assertEquals("Depósitos ignorados não devem sequer constar do extrato.", 
+                extratoAntes, 
+                extratoDepois);
         }
 
         @Test
         public void testarSaqueComFundos() {
                 contaDoJoao.sacar(2);
-                assertEquals("O valor sacado deve ser descontado do saldo da conta", 
+                
+                assertEquals("O valor sacado deve ser descontado do saldo da conta.", 
                 saldoInicial - 2,
                 contaDoJoao.getSaldoEmReais());
         }
@@ -76,7 +86,8 @@ public class ContaCorrenteTest {
         @Test
         public void testarSaqueSemFundos() {
                 contaDoJoao.sacar(100000);
-                assertEquals("Saques de valores maiores que o saldo não devem ser permitidos", 
+
+                assertEquals("Saques de valores maiores que o saldo não devem ser permitidos.", 
                 saldoInicial,
                 contaDoJoao.getSaldoEmReais());
         }
@@ -85,12 +96,12 @@ public class ContaCorrenteTest {
         public void testarTransferencia() {
                 contaDoJoao.efetuarTransferecia(contaDaMaria, 3);
 
-                assertEquals("O saldo da conta destino deve ser incrementado dem 3, valor da transferência", 
+                assertEquals("O saldo da conta destino deve ser incrementado dem 3, valor da transferência.", 
                 saldoInicial + 3, 
                 contaDaMaria.getSaldoEmReais(), 
                 FLOAT_DELTA);
 
-                assertEquals("O saldo da conta destino deve ser decrementado dem 3, valor da transferência", 
+                assertEquals("O saldo da conta destino deve ser decrementado dem 3, valor da transferência.", 
                 saldoInicial - 3, 
                 contaDoJoao.getSaldoEmReais(), 
                 FLOAT_DELTA);
@@ -100,12 +111,12 @@ public class ContaCorrenteTest {
         public void testarTransferenciaSemFundos() {
                 contaDoJoao.efetuarTransferecia(contaDaMaria, 100000);
 
-                assertEquals("O saldo da conta destino deve permanecer o mesmo, visto que a transferência é sem fundos", 
+                assertEquals("O saldo da conta destino deve permanecer o mesmo, visto que a transferência é sem fundos.", 
                 saldoInicial, 
                 contaDaMaria.getSaldoEmReais(), 
                 FLOAT_DELTA);
 
-                assertEquals("O saldo da conta origem deve permanecer o mesmo, visto que a transferência é sem fundos", 
+                assertEquals("O saldo da conta origem deve permanecer o mesmo, visto que a transferência é sem fundos.", 
                 saldoInicial, 
                 contaDoJoao.getSaldoEmReais(), 
                 FLOAT_DELTA);
@@ -116,11 +127,11 @@ public class ContaCorrenteTest {
                 long cpfDaContaDaMaria = contaDaMaria.getCpfDoCorrentista();
                 long cpfDaContaDoJoao = contaDoJoao.getCpfDoCorrentista();
 
-                assertEquals("O CPF cadastrado na conta deve ser o mesmo que o do correntista", 
+                assertEquals("O CPF cadastrado na conta deve ser o mesmo que o do correntista.", 
                 cpfMaria, 
                 cpfDaContaDaMaria);
 
-                assertEquals("O CPF cadastrado na conta deve ser o mesmo que o do correntista", 
+                assertEquals("O CPF cadastrado na conta deve ser o mesmo que o do correntista.", 
                 cpfJoao, 
                 cpfDaContaDoJoao);
         }
@@ -131,7 +142,7 @@ public class ContaCorrenteTest {
                 contaDoJoao.sacar(10);
                 contaDaMaria.receberDepositoEmDinheiro(10.0);
 
-                assertEquals("O número de transações de todas as contas deverá retornar 3, o número de movimentações feitas", 
+                assertEquals("O número de transações de todas as contas deverá retornar 3, o número de movimentações feitas.", 
                 ContaCorrente.getQuantidadeDeTransacoesDeTodasAsContas(), 
                 3);
         }
