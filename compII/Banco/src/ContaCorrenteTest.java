@@ -1,15 +1,16 @@
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import jdk.jfr.Timestamp;
-
-import static org.junit.Assert.assertEquals;
 
 public class ContaCorrenteTest {
 
         // para cobrir pequenos erros de precisão do tipo float
         private float FLOAT_DELTA = 0.00001f;
-        private int cpfTeste = 12345678;
+        private long cpfMaria = 12345678;
+        private long cpfJoao = 54654757;
+
 
         private ContaCorrente contaDoJoao;
         private Correntista joao;
@@ -22,7 +23,7 @@ public class ContaCorrenteTest {
                 joao = new Correntista("Joao", 5465475);
                 contaDoJoao = new ContaCorrente(1, joao);
 
-                maria = new Correntista("Maria", cpfTeste);
+                maria = new Correntista("Maria", cpfMaria);
                 contaDaMaria = new ContaCorrente(2, maria);
 
                 saldoInicial = contaDoJoao.getSaldoEmReais();
@@ -53,8 +54,10 @@ public class ContaCorrenteTest {
                 String extratoAntes = contaDoJoao.getExtrato();
 
                 contaDoJoao.receberDepositoEmDinheiro(0);
-                assertEquals("Depósitos de valor zero devem ser ignorados", saldoInicial, contaDoJoao.getSaldoEmReais(),
-                                FLOAT_DELTA);
+                assertEquals("Depósitos de valor zero devem ser ignorados", 
+                saldoInicial, 
+                contaDoJoao.getSaldoEmReais(),
+                FLOAT_DELTA);
 
                 String extratoDepois = contaDoJoao.getExtrato();
 
@@ -65,46 +68,77 @@ public class ContaCorrenteTest {
         @Test
         public void testarSaqueComFundos() {
                 contaDoJoao.sacar(2);
-                assertEquals("O valor sacado deve ser descontado do saldo da conta", saldoInicial - 2,
-                                contaDoJoao.getSaldoEmReais());
+                assertEquals("O valor sacado deve ser descontado do saldo da conta", 
+                saldoInicial - 2,
+                contaDoJoao.getSaldoEmReais());
         }
 
         @Test
         public void testarSaqueSemFundos() {
                 contaDoJoao.sacar(100000);
-                assertEquals("Saques de valores maiores que o saldo não devem ser permitidos", saldoInicial,
-                                contaDoJoao.getSaldoEmReais());
+                assertEquals("Saques de valores maiores que o saldo não devem ser permitidos", 
+                saldoInicial,
+                contaDoJoao.getSaldoEmReais());
         }
 
         @Test
         public void testarTransferencia() {
                 contaDoJoao.efetuarTransferecia(contaDaMaria, 3);
 
-                assertEquals("", saldoInicial + 3, contaDaMaria.getSaldoEmReais(), FLOAT_DELTA);
+                assertEquals("O saldo da conta destino deve ser incrementado dem 3, valor da transferência", 
+                saldoInicial + 3, 
+                contaDaMaria.getSaldoEmReais(), 
+                FLOAT_DELTA);
 
-                assertEquals("", saldoInicial - 3, contaDoJoao.getSaldoEmReais(), FLOAT_DELTA);
+                assertEquals("O saldo da conta destino deve ser decrementado dem 3, valor da transferência", 
+                saldoInicial - 3, 
+                contaDoJoao.getSaldoEmReais(), 
+                FLOAT_DELTA);
         }
 
         @Test
         public void testarTransferenciaSemFundos() {
                 contaDoJoao.efetuarTransferecia(contaDaMaria, 100000);
 
-                assertEquals("O valor de transferência deve ser igual ou inferior ao saldo em conta", saldoInicial, contaDaMaria.getSaldoEmReais(), FLOAT_DELTA);
+                assertEquals("O saldo da conta destino deve permanecer o mesmo, visto que a transferência é sem fundos", 
+                saldoInicial, 
+                contaDaMaria.getSaldoEmReais(), 
+                FLOAT_DELTA);
 
-                assertEquals("O saldo após a transferência deve ser diferente do saldo inicial", saldoInicial, contaDoJoao.getSaldoEmReais(), FLOAT_DELTA);
+                assertEquals("O saldo da conta origem deve permanecer o mesmo, visto que a transferência é sem fundos", 
+                saldoInicial, 
+                contaDoJoao.getSaldoEmReais(), 
+                FLOAT_DELTA);
         }
 
         @Test
         public void testarGetCpfCorrentista() {
-                assertEquals("O CPF cadastrado na conta deve ser o mesmo que o do correntista", cpfTeste, contaDaMaria.getCpfDoCorrentista(), cpfTeste);
+                long cpfDaContaDaMaria = contaDaMaria.getCpfDoCorrentista();
+                long cpfDaContaDoJoao = contaDoJoao.getCpfDoCorrentista();
+
+                assertEquals("O CPF cadastrado na conta deve ser o mesmo que o do correntista", 
+                cpfMaria, 
+                cpfDaContaDaMaria);
+
+                assertEquals("O CPF cadastrado na conta deve ser o mesmo que o do correntista", 
+                cpfJoao, 
+                cpfDaContaDoJoao);
         }
 
         @Test 
         public void testarQuantidadeDeTransacoesDeTodasAsContas(){
+                contaDoJoao.receberDepositoEmDinheiro(30.0);
                 contaDoJoao.sacar(10);
-                contaDoJoao.receberDepositoEmDinheiro(30);
-                contaDaMaria.receberDepositoEmDinheiro(10);
-                assertEquals("O número de transações de todas as contas deve ser gerado corretamente", ContaCorrente.getQuantidadeDeTransacoesDeTodasAsContas(), 3);
+                contaDaMaria.receberDepositoEmDinheiro(10.0);
+
+                assertEquals("O número de transações de todas as contas deverá retornar 3, o número de movimentações feitas", 
+                ContaCorrente.getQuantidadeDeTransacoesDeTodasAsContas(), 
+                3);
+        }
+
+        @Test 
+        public void testarCpfValido(long cpf){
+                //to-do: testar validade do CPF inserido. tem que ter 11 dígitos
         }
 
 }
