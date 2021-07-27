@@ -6,6 +6,6 @@
 
 - Computação II
 
-  - [Sobre](./compII/README.md)
+  - [Sobre](compII/compII.md)
   - [Repositório pessoal](https://github.com/anvitrola/BCC-UFRJ/tree/master/compII)
   - [Repositório da turma](https://github.com/vigusmao/Comp2_2021_1)
