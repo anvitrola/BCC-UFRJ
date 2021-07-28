@@ -1,6 +1,7 @@
-import org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class ContaCorrenteTest {
 
@@ -18,7 +19,7 @@ public class ContaCorrenteTest {
 
         @Before
         public void setUp() {
-                joao = new Correntista("Joao", 5465475);
+                joao = new Correntista("Joao", cpfJoao);
                 contaDoJoao = new ContaCorrente(1, joao);
 
                 maria = new Correntista("Maria", cpfMaria);
@@ -78,7 +79,8 @@ public class ContaCorrenteTest {
                 
                 assertEquals("O valor sacado deve ser descontado do saldo da conta.", 
                 saldoInicial - 2,
-                contaDoJoao.getSaldoEmReais());
+                contaDoJoao.getSaldoEmReais(),
+                        FLOAT_DELTA);
         }
 
         @Test
@@ -147,8 +149,8 @@ public class ContaCorrenteTest {
                         quantidadeDeTransacoesAnteriores + 3);
         }
 
-        @Test 
-        public void testarCpfValido(long cpf){
+        @Test
+        public void testarCpfValido(){
                 //to-do: testar validade do CPF inserido. tem que ter 11 dígitos
         }
 
