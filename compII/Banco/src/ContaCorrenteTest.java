@@ -89,7 +89,8 @@ public class ContaCorrenteTest {
 
                 assertEquals("Saques de valores maiores que o saldo não devem ser permitidos.", 
                 saldoInicial,
-                contaDoJoao.getSaldoEmReais());
+                contaDoJoao.getSaldoEmReais(),
+                        FLOAT_DELTA);
         }
 
         @Test

@@ -56,7 +56,7 @@ public class ContaCorrente {
 
     public void sacar(float valor) {
         if (valor > this.saldoEmReais)
-            throw new Error("Saldo insuficiente para realizar a transação.");
+            return;
 
         this.saldoEmReais -= valor;
 
@@ -68,9 +68,9 @@ public class ContaCorrente {
 
     public void efetuarTransferecia(ContaCorrente contaDestino, float valor) {
         if (valor > this.saldoEmReais) {
-            throw new Error("Saldo insuficiente para realizar a transação");
+            return;
         } else if (valor <= 0) {
-            throw new Error("O valor deve ser maior que 0 (zero) para que a transação seja efetivada.");
+            return;
         }
 
         this.saldoEmReais-= valor;
