@@ -10,19 +10,16 @@ public class ContaCorrenteTest {
         private final long cpfMaria = 12345678;
         private final long cpfJoao = 54654757;
 
-
         private ContaCorrente contaDoJoao;
-        private Correntista joao;
         private ContaCorrente contaDaMaria;
-        private Correntista maria;
         private float saldoInicial;
 
         @Before
         public void setUp() {
-                joao = new Correntista("Joao", cpfJoao);
+                Correntista joao = new Correntista("Joao", cpfJoao);
                 contaDoJoao = new ContaCorrente(1, joao);
 
-                maria = new Correntista("Maria", cpfMaria);
+                Correntista maria = new Correntista("Maria", cpfMaria);
                 contaDaMaria = new ContaCorrente(2, maria);
 
                 saldoInicial = contaDoJoao.getSaldoEmReais();
@@ -139,7 +136,7 @@ public class ContaCorrenteTest {
 
         @Test 
         public void testarQuantidadeDeTransacoesDeTodasAsContas(){
-                int quantidadeDeTransacoesAnteriores = contaDoJoao.getQuantidadeDeTransacoesDeTodasAsContas();
+                int quantidadeDeTransacoesAnteriores = ContaCorrente.getQuantidadeDeTransacoesDeTodasAsContas();
 
                 contaDoJoao.receberDepositoEmDinheiro(30.0F);
                 contaDoJoao.sacar(10F);
