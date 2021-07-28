@@ -1,19 +1,12 @@
 import java.util.ArrayList;
-//import java.util.Date;
+import java.util.Date;
 
 public class ContaCorrente {
-
     private final int numero;
     private final long cpfCorrentista;
-
-    private Correntista correntista;
-
-    private float saldoEmReais = 0;
-
+    private float saldoEmReais;
     private ArrayList<String> transacoes;
-
     public static final float SALDO_INICIAL_DA_CONTA = 10; // "constante"
-
     private static int quantidadeDeTransacoesDeTodasAsContas = 0;
 
     // CONSTRUTOR: método especial que roda quando chamamos o "new" para instanciar
@@ -37,13 +30,10 @@ public class ContaCorrente {
         }
 
         this.saldoEmReais += valor;
-
-        // Date agora = new Date(); // now
-
-        String registroTransacao = "recebido depósito em dinheiro: " + valor;
-
-        this.transacoes.add(registroTransacao);
-        quantidadeDeTransacoesDeTodasAsContas++;
+        registrarTransacao(
+                String.format("Depósito de R$%.2f efetuado com sucesso.",
+                        valor)
+        );
     }
 
     public long getCpfDoCorrentista() {
@@ -65,14 +55,15 @@ public class ContaCorrente {
     }
 
     public void sacar(float valor) {
-        if (valor > this.saldoEmReais) {
+        if (valor > this.saldoEmReais)
             throw new Error("Saldo insuficiente para realizar a transação.");
-        }
 
         this.saldoEmReais -= valor;
-        this.transacoes.add("Saque de" + valor + "efetuado com sucesso.");
 
-        quantidadeDeTransacoesDeTodasAsContas++;
+        registrarTransacao(
+                String.format("Saque de R$%.2f efetuado com sucesso.",
+                        valor)
+        );
     }
 
     public void efetuarTransferecia(ContaCorrente contaDestino, float valor) {
@@ -83,8 +74,19 @@ public class ContaCorrente {
         }
 
         this.saldoEmReais-= valor;
-        contaDestino.receberDepositoEmDinheiro(valor);
-        
+        contaDestino.saldoEmReais += valor;
+
+        registrarTransacao(
+                String.format("Transferência para conta %d no valor de R$%.2f",
+                contaDestino.numero,
+                valor)
+        );
+    }
+
+    private void registrarTransacao (String registro){
+        Date dataAtual = new Date();
+        this.transacoes.add(dataAtual + ": " + registro);
         quantidadeDeTransacoesDeTodasAsContas++;
     }
+
 }

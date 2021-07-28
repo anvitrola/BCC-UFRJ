@@ -4,7 +4,7 @@ public class Correntista {
 
     public Correntista (String nome, long cpf){
         this.cpf = cpf;
-        setNome(nome);
+        this.nome = nome;
     }
 
     public  void setNome (String nome){

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/compII/Armarios/Armarios.iml" filepath="$PROJECT_DIR$/compII/Armarios/Armarios.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/BCC-UFRJ.iml" filepath="$PROJECT_DIR$/.idea/BCC-UFRJ.iml" />
+      <module fileurl="file://$PROJECT_DIR$/compII/Banco/Banco.iml" filepath="$PROJECT_DIR$/compII/Banco/Banco.iml" />
+      <module fileurl="file://$PROJECT_DIR$/compII/helloWorld/helloWorld.iml" filepath="$PROJECT_DIR$/compII/helloWorld/helloWorld.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,15 +1,13 @@
+import org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-
-import jdk.jfr.Timestamp;
 
 public class ContaCorrenteTest {
 
         // para cobrir pequenos erros de precisão do tipo float
-        private float FLOAT_DELTA = 0.00001f;
-        private long cpfMaria = 12345678;
-        private long cpfJoao = 54654757;
+        private final float FLOAT_DELTA = 0.00001f;
+        private final long cpfMaria = 12345678;
+        private final long cpfJoao = 54654757;
 
 
         private ContaCorrente contaDoJoao;
@@ -138,13 +136,15 @@ public class ContaCorrenteTest {
 
         @Test 
         public void testarQuantidadeDeTransacoesDeTodasAsContas(){
-                contaDoJoao.receberDepositoEmDinheiro(30.0);
-                contaDoJoao.sacar(10);
-                contaDaMaria.receberDepositoEmDinheiro(10.0);
+                int quantidadeDeTransacoesAnteriores = contaDoJoao.getQuantidadeDeTransacoesDeTodasAsContas();
 
-                assertEquals("O número de transações de todas as contas deverá retornar 3, o número de movimentações feitas.", 
-                ContaCorrente.getQuantidadeDeTransacoesDeTodasAsContas(), 
-                3);
+                contaDoJoao.receberDepositoEmDinheiro(30.0F);
+                contaDoJoao.sacar(10F);
+                contaDaMaria.receberDepositoEmDinheiro(10.0F);
+
+                assertEquals("O número de transações de todas as contas deverá retornar o número de movimentações feitas.",
+                ContaCorrente.getQuantidadeDeTransacoesDeTodasAsContas(),
+                        quantidadeDeTransacoesAnteriores + 3);
         }
 
         @Test 
