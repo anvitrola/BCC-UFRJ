@@ -18,7 +18,7 @@ public class Fracao {
         //chamada do outro construtor através do this. lê-se "esse(outro)"
         this(Math.abs(numerador),
                 Math.abs(denominador),
-                numerador / denominador >= 0); //terceiro parâmetro = sinal
+                numerador / (double) denominador >= 0); //terceiro parâmetro = sinal. cast porque int/int vai ser sempre um valor >=0
     }
 
     /**
