@@ -1,17 +1,19 @@
 public class Jogador {
     private final String usuario;
     private String senha;
-    private boolean isOnline;
+    private boolean status; //true = online false = offline
     private boolean isJogando;
     private static int pontuacao;
+    private int PONTUACAO_INICIAL = 1000;
     private ArrayList<Partida> historicoDePartidas;
 
     public Jogador (String usuario, String senha){
         this.usuario = usuario;
         this.senha = senha; // ToDo: Encrypt
-        this.pontuacao = 1000;
+        this.pontuacao = PONTUACAO_INICIAL;
         this.historicoDePartidas = new ArrayList<>();
-        this.isOnline = true;
+        this.status = true;
+        this.isJogando = false;
     }
 
     public void setSenha (String novaSenha){
@@ -43,16 +45,26 @@ public class Jogador {
         isVencedor ? pontuacao++ : pontuacao--;
     }
 
-    public void setStatus (){
-        isOnline = !isOnline;
+    public void setOnline (){
+        status = true;
     }
 
-    public boolean getStatus (){
-        return this.isOnline;
+    public void setOffline(){
+        status = false;
+    }
+
+    public String getStatus (){
+        this.status
+                ? return "Online"
+        : "Offline"
     }
 
     public boolean setIsJogando (){
-        isJogando = !isJogando;
+        isJogando = true;
+    }
+
+    private String getSenha (){
+        return this.senha
     }
 
     public void getIsJogando(){
