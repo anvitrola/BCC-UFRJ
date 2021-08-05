@@ -20,6 +20,10 @@ public class Jogador {
         this.senha = novaSenha;
     }
 
+    private String getSenha (){
+        return this.senha
+    }
+
     public String getUsuario () {
         return this.usuario;
     }
@@ -36,13 +40,6 @@ public class Jogador {
         }
 
         return historico;
-    }
-
-    public void registrarPartida (String partida, boolean isVencedor){
-        Date data = new Date();
-        this.historicoDePartidas.add(data + ": " + partida);
-
-        isVencedor ? pontuacao++ : pontuacao--;
     }
 
     public void setOnline (){
@@ -63,11 +60,30 @@ public class Jogador {
         isJogando = true;
     }
 
-    private String getSenha (){
-        return this.senha
+    public boolean setIsAvaidable(){
+        isJogando = false;
     }
 
     public void getIsJogando(){
         return isJogando;
+    }
+
+    public void registrarPartida (Partida partida){
+        Date data = new Date();
+        this.historicoDePartidas.add(data + ": " + partida);
+    }
+
+    private void registrarVitoria(Partida partida){
+        registrarPartida(partida);
+        pontuacao++;
+    }
+
+    private void registrarDerrota(Partida partida){
+        registrarPartida(partida);
+        pontuacao--;
+    }
+
+    private void registrarEmpate(Partida partida){
+        registrarPartida(partida);
     }
 }
