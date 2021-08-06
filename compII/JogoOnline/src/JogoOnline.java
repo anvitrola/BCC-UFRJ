@@ -4,15 +4,16 @@ import java.util.Objects;
 public class JogoOnline {
     private ArrayList<Jogador> jogadores;
 
-    public cadastrarUsuario (String usuario, String senha){
+    public void cadastrarUsuario (String usuario, String senha){
         boolean isTaken = false;
 
         for(int i = 0;i < jogadores.size(); i++){
-            jogadores[i].getUsuario() == usuario && isTaken = true
+            Objects.equals(jogadores.get(i).getUsuario(), usuario) && isTaken = true
                     return;
         }
 
         Jogador novoJogador = new Jogador(usuario, senha);
+        novoJogador.setOnline();
         this.jogadores.add(novoJogador);
     }
 
