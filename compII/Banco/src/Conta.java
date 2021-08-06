@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ContaCorrente {
+public class Conta {
     private final int numero;
     private final long cpfCorrentista;
     private float saldoEmReais;
@@ -10,7 +10,7 @@ public class ContaCorrente {
     private static int quantidadeDeTransacoesDeTodasAsContas = 0;
 
     // CONSTRUTOR: método especial que roda quando chamamos o "new" para instanciar
-    public ContaCorrente(int numeroDaConta, Correntista correntista
+    public Conta(int numeroDaConta, Correntista correntista
     ) {
         this.cpfCorrentista = correntista.getCpf();
         this.numero = numeroDaConta;
@@ -66,7 +66,7 @@ public class ContaCorrente {
         );
     }
 
-    public void efetuarTransferecia(ContaCorrente contaDestino, float valor) {
+    public void efetuarTransferecia(Conta contaDestino, float valor) {
         if (valor > this.saldoEmReais) {
             return;
         } else if (valor <= 0) {

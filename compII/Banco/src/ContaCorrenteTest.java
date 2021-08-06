@@ -10,17 +10,17 @@ public class ContaCorrenteTest {
         private final long cpfMaria = 12345678;
         private final long cpfJoao = 54654757;
 
-        private ContaCorrente contaDoJoao;
-        private ContaCorrente contaDaMaria;
+        private Conta contaDoJoao;
+        private Conta contaDaMaria;
         private float saldoInicial;
 
         @Before
         public void setUp() {
                 Correntista joao = new Correntista("Joao", cpfJoao);
-                contaDoJoao = new ContaCorrente(1, joao);
+                contaDoJoao = new Conta(1, joao);
 
                 Correntista maria = new Correntista("Maria", cpfMaria);
-                contaDaMaria = new ContaCorrente(2, maria);
+                contaDaMaria = new Conta(2, maria);
 
                 saldoInicial = contaDoJoao.getSaldoEmReais();
         }
@@ -136,14 +136,14 @@ public class ContaCorrenteTest {
 
         @Test 
         public void testarQuantidadeDeTransacoesDeTodasAsContas(){
-                int quantidadeDeTransacoesAnteriores = ContaCorrente.getQuantidadeDeTransacoesDeTodasAsContas();
+                int quantidadeDeTransacoesAnteriores = Conta.getQuantidadeDeTransacoesDeTodasAsContas();
 
                 contaDoJoao.receberDepositoEmDinheiro(30.0F);
                 contaDoJoao.sacar(10F);
                 contaDaMaria.receberDepositoEmDinheiro(10.0F);
 
                 assertEquals("O número de transações de todas as contas deverá retornar o número de movimentações feitas.",
-                ContaCorrente.getQuantidadeDeTransacoesDeTodasAsContas(),
+                Conta.getQuantidadeDeTransacoesDeTodasAsContas(),
                         quantidadeDeTransacoesAnteriores + 3);
         }
 
