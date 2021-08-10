@@ -2,10 +2,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Conta {
-    private final int numero;
+    protected final int numero;
     private final long cpfCorrentista;
-    private float saldoEmReais;
+    protected float saldoEmReais;
+    Gerente gerente;
     private ArrayList<String> transacoes;
+    private boolean ativa;
     public static final float SALDO_INICIAL_DA_CONTA = 10; // "constante"
     private static int quantidadeDeTransacoesDeTodasAsContas = 0;
 
@@ -17,6 +19,11 @@ public class Conta {
         this.saldoEmReais = SALDO_INICIAL_DA_CONTA; // saldo inicial doado pelo banco
         this.transacoes = new ArrayList<>();
         this.transacoes.add("Conta criada com saldo de " + this.saldoEmReais);
+        this.ativa = true;
+    }
+
+    public boolean isAtiva() {
+        return this.ativa;
     }
 
     public float getSaldoEmReais() {
@@ -87,6 +94,27 @@ public class Conta {
         Date dataAtual = new Date();
         this.transacoes.add(dataAtual + ": " + registro);
         quantidadeDeTransacoesDeTodasAsContas++;
+    }
+
+    public void encerrar() {
+        if (this.saldoEmReais < 0) {
+            throw new RuntimeException("Não e possível encerrar conta com saldo negativo. Consulte a gerência");
+        }
+        this.ativa = false;
+
+        System.out.printf("\nConta %d encerrada", this.numero);
+    }
+
+    public Gerente getGerente() {
+        return this.gerente;
+    }
+
+    public void setGerente(Gerente novaGerente) {
+        if (this.gerente != null) {
+            // avisa ao gerente antigo que ele não é mais gerente
+            this.gerente.deixarDeGerenciarConta(this);
+        }
+        this.gerente = novaGerente;
     }
 
 }

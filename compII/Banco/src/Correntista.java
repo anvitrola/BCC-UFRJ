@@ -1,22 +1,21 @@
-public class Correntista {
-    private final long cpf;
-    private String nome;
+import java.util.ArrayList;
+
+public class Correntista extends PessoaFisica {
+    private ArrayList<ContaInvestimento> contasInvestimento;
+    private Conta contaCorrente;
 
     public Correntista (String nome, long cpf){
-        this.cpf = cpf;
-        this.nome = nome;
+        super(nome, cpf);
+        this.contaCorrente = null;
+        this.contasInvestimento = new ArrayList<>();
     }
 
-    public  void setNome (String nome){
-        this.nome = nome;
+    public Conta getContaCorrente() {
+        return this.contaCorrente;
     }
 
-    public String getNome () {
-        return this.nome;
-    }
-
-    public long getCpf(){
-        return this.cpf;
+    public void setContaCorrente(Conta contaCorrente){
+        this.contaCorrente = contaCorrente;
     }
 
 }
