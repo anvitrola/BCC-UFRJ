@@ -5,7 +5,7 @@ public class Banco {
 
         //PessoaFisica Maria = new PessoaFisica("Maria", 432212);
 
-        Conta contaDaAna = new Conta(111, Ana);
+        Conta contaDaAna = new ContaCorrente(111, Ana);
 
         Gerente meuGerente = new Gerente("João", 12345678, 1111);
         meuGerente.setEndereco("Novo endereço, numero tal");

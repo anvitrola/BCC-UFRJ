@@ -1,26 +1,34 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import java.util.ArrayList;
 
-public class ContaCorrenteTest {
+import static org.junit.Assert.*;
+
+public class ContaTest {
 
         // para cobrir pequenos erros de precisão do tipo float
         private final float FLOAT_DELTA = 0.00001f;
         private final long cpfMaria = 12345678;
         private final long cpfJoao = 54654757;
+        private final long cpfAna = 1564242;
 
         private Conta contaDoJoao;
         private Conta contaDaMaria;
+
+        private Correntista correntistaAna;
+
         private float saldoInicial;
 
         @Before
         public void setUp() {
                 Correntista joao = new Correntista("Joao", cpfJoao);
-                contaDoJoao = new Conta(1, joao);
+                contaDoJoao = new ContaCorrente(1, joao);
 
                 Correntista maria = new Correntista("Maria", cpfMaria);
-                contaDaMaria = new Conta(2, maria);
+                contaDaMaria = new ContaCorrente(2, maria);
+
+                this.correntistaAna = new Correntista("Ana", cpfAna);
 
                 saldoInicial = contaDoJoao.getSaldoEmReais();
         }
@@ -150,6 +158,33 @@ public class ContaCorrenteTest {
         @Test
         public void testarCpfValido(){
                 //to-do: testar validade do CPF inserido. tem que ter 11 dígitos
+        }
+
+        @Test
+        public void testarCriarContaInvestimento() {
+                ContaInvestimento contaInvestimentoJoao =
+                        new ContaInvestimento(1234, contaDoJoao.correntista, "tesouro nacional", 3.6);
+
+                ArrayList<ContaInvestimento> contasInvestimentoDeJoao = new ArrayList<>();
+                contasInvestimentoDeJoao.add(contaInvestimentoJoao);
+
+
+                assertEquals("Deverá criar uma conta investimento",
+                        contaDoJoao.correntista.getContasInvestimento(),
+                        contasInvestimentoDeJoao);
+        }
+
+        @Test
+        public void testarCriarContaInvestimentoSemContaCorrente() {
+                ContaInvestimento contaInvestimentoAna =
+                        new ContaInvestimento(1234, correntistaAna, "tesouro nacional", 3.6);
+
+                ArrayList<ContaInvestimento> contasInvestimentoDeAna = new ArrayList<>();
+                contasInvestimentoDeAna.add(contaInvestimentoAna);
+
+                assertEquals("Deverá lançar uma runTimeException",
+                        correntistaAna.getContasInvestimento(),
+                        contasInvestimentoDeAna); 
         }
 
 }

@@ -3,7 +3,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Conta {
+public abstract class Conta {
     protected final int numero;
 
     protected Correntista correntista;
@@ -27,7 +27,6 @@ public class Conta {
         this.transacoes.add("Conta criada com saldo de " + this.saldoEmReais);
         this.ativa = true;
         this.correntista = correntista;
-        this.correntista.setContaCorrente(this);
     }
 
     public boolean isAtiva() {

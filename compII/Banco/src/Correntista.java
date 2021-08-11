@@ -18,4 +18,11 @@ public class Correntista extends PessoaFisica {
         this.contaCorrente = contaCorrente;
     }
 
+    public ArrayList<ContaInvestimento> getContasInvestimento() {
+        return contasInvestimento;
+    }
+
+    protected void setContasInvestimento(ContaInvestimento contaInvestimento) {
+        this.contasInvestimento.add(contaInvestimento);
+    }
 }
