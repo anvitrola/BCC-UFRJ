@@ -17,6 +17,6 @@ public class ContaInvestimento extends Conta{
     }
 
     private void resgatarTotal(){
-        this.efetuarTransferecia(this.correntista.getContaCorrente(), this.saldoEmReais);
+        this.efetuarTransferecia(correntista.getContaCorrente(), this.saldoEmReais);
     }
 }
