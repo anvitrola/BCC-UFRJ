@@ -1,18 +1,24 @@
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Conta {
     protected final int numero;
+
+    protected Correntista correntista;
     private final long cpfCorrentista;
+
     protected float saldoEmReais;
     Gerente gerente;
+
     private ArrayList<String> transacoes;
     private boolean ativa;
     public static final float SALDO_INICIAL_DA_CONTA = 10; // "constante"
     private static int quantidadeDeTransacoesDeTodasAsContas = 0;
 
     // CONSTRUTOR: método especial que roda quando chamamos o "new" para instanciar
-    public Conta(int numeroDaConta, Correntista correntista
+    public Conta(int numeroDaConta, @NotNull Correntista correntista
     ) {
         this.cpfCorrentista = correntista.getCpf();
         this.numero = numeroDaConta;
@@ -20,6 +26,8 @@ public class Conta {
         this.transacoes = new ArrayList<>();
         this.transacoes.add("Conta criada com saldo de " + this.saldoEmReais);
         this.ativa = true;
+        this.correntista = correntista;
+        this.correntista.setContaCorrente(this);
     }
 
     public boolean isAtiva() {
@@ -73,7 +81,7 @@ public class Conta {
         );
     }
 
-    public void efetuarTransferecia(Conta contaDestino, float valor) {
+    protected void efetuarTransferecia(Conta contaDestino, float valor) {
         if (valor > this.saldoEmReais) {
             return;
         } else if (valor <= 0) {
@@ -96,7 +104,7 @@ public class Conta {
         quantidadeDeTransacoesDeTodasAsContas++;
     }
 
-    public void encerrar() {
+    protected void encerrar() {
         if (this.saldoEmReais < 0) {
             throw new RuntimeException("Não e possível encerrar conta com saldo negativo. Consulte a gerência");
         }
@@ -109,12 +117,11 @@ public class Conta {
         return this.gerente;
     }
 
-    public void setGerente(Gerente novaGerente) {
+    protected void setGerente(Gerente novaGerente) {
         if (this.gerente != null) {
             // avisa ao gerente antigo que ele não é mais gerente
             this.gerente.deixarDeGerenciarConta(this);
         }
         this.gerente = novaGerente;
     }
-
 }

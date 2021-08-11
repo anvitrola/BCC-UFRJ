@@ -1,7 +1,6 @@
 public class ContaInvestimento extends Conta{
-    String tipoInvestimento;
-    float taxaJuros;
-    Correntista correntista;
+    private String tipoInvestimento;
+    private float taxaJuros;
 
     public ContaInvestimento(int numeroDaConta, Correntista correntista, String tipoInvestimento, float taxaJuros) {
         super(numeroDaConta, correntista);
@@ -11,7 +10,6 @@ public class ContaInvestimento extends Conta{
 
         this.taxaJuros = taxaJuros;
         this.tipoInvestimento = tipoInvestimento;
-        this.correntista = correntista;
     }
 
     private float aplicarJuros (){
@@ -19,6 +17,6 @@ public class ContaInvestimento extends Conta{
     }
 
     private void resgatarTotal(){
-        this.efetuarTransferecia(correntista.getContaCorrente(), this.saldoEmReais);
+        this.efetuarTransferecia(this.correntista.getContaCorrente(), this.saldoEmReais);
     }
 }
