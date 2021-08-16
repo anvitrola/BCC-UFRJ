@@ -184,7 +184,7 @@ public class ContaTest {
 
                 assertEquals("Deverá lançar uma runTimeException",
                         correntistaAna.getContasInvestimento(),
-                        contasInvestimentoDeAna); 
+                        contasInvestimentoDeAna);
         }
 
 }
