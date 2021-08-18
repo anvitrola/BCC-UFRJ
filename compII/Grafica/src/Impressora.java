@@ -1,30 +1,31 @@
 public abstract class Impressora {
+    private int folhasRestantes;
+    private int qtdDocsImpressos;
 
     public boolean imprimirDocumento(Documento documento) {
-        // verifica se há papel suficiente (se não houver, não imprime)
-        // ToDo IMPLEMENT ME!!!
-
-        // incrementa o número de documentos impressos
-        // ToDo IMPLEMENT ME!!!
-
-        // para cada página, manda imprimir de fato
-        for (int i = 1; i <= documento.getQuantPaginas(); i++) {
-            executarImpressaoPagina(documento.getPagina(i));
+        if (documento.getQuantPaginas() > this.folhasRestantes){
+            return false;
         }
 
+        for (int i = 1; i <= documento.getQuantPaginas(); i++) {
+            executarImpressaoPagina(documento.getPagina(i));
+            folhasRestantes--;
+        }
+
+        qtdDocsImpressos++;
         return true;
     }
 
     public void carregarPapel(int numeroDeFolhas) {
-        // ToDo IMPLEMENT ME!!!
+        this.folhasRestantes += numeroDeFolhas;
     }
 
     public int getQuantidadeFolhasRestantes() {
-        return 0;  // ToDo IMPLEMENT ME!!!
+        return this.folhasRestantes;
     }
 
     public int getQuantidadeDocumentosImpressos() {
-        return 0;  // ToDo IMPLEMENT ME!!!
+        return this.qtdDocsImpressos;
     }
 
     public abstract void executarRotinaLimpeza();

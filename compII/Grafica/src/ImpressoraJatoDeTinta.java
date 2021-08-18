@@ -1,4 +1,8 @@
 public class ImpressoraJatoDeTinta extends Impressora {
+    private int nivelTintaPreta;
+    private int nivelTintaCiano;
+    private int nivelTintaMagenta;
+    private int nivelTintaAmarela;
 
     @Override
     public void executarRotinaLimpeza() {
@@ -11,18 +15,18 @@ public class ImpressoraJatoDeTinta extends Impressora {
     }
 
     public int getNivelTintaPreta() {
-        return 0;  // ToDo IMPLEMENT ME!!!
+        return this.nivelTintaPreta;
     }
 
     public int getNivelTintaAmarela() {
-        return 0;  // ToDo IMPLEMENT ME!!!
+        return this.nivelTintaAmarela;
     }
 
     public int getNivelTintaMagenta() {
-        return 0;  // ToDo IMPLEMENT ME!!!
+        return this.nivelTintaMagenta;
     }
 
     public int getNivelTintaCiano() {
-        return 0;  // ToDo IMPLEMENT ME!!!
+        return this.nivelTintaCiano;
     }
 }

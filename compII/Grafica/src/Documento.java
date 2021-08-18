@@ -6,18 +6,19 @@ public class Documento {
     ArrayList<String> paginas;
 
     public Documento(ArrayList<String> paginas, boolean emCores) {
-        // ToDo IMPLEMENT ME!!!
+        paginas = new ArrayList<>();
+        this.emCores = emCores;
     }
 
     public boolean isEmCores() {
-        isEmCores ? return true : false
+        isEmCores ? return true : false;
     }
 
     public int getQuantPaginas() {
-        return this.quantPaginas;  // ToDo IMPLEMENT ME!!!
+        return this.paginas.size();
     }
 
     public String getPagina(int numeroDaPagina) {
-        return null;  // ToDo IMPLEMENT ME!!!
+        return this.paginas.get(numeroDaPagina);
     }
 }

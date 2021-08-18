@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Random;
 
 public class Grafica {
     public float precoPorPaginaColorida;
@@ -10,7 +11,7 @@ public class Grafica {
     }
 
     protected void imprimirDocumento(Documento documento) {
-        // ToDo IMPLEMENT ME!!!
+            //ToDo
     }
 
     protected float orcarImpressao(Documento documento) {
@@ -27,7 +28,7 @@ public class Grafica {
     }
 
     protected void adicionarImpressora(Impressora impressora) {
-        impressoras.add(impressora);
+        impressoras.add(new Random(), impressora); //adiciona uma impressora com um código aleatório as index
     }
 
     protected void setPrecoPorPagina(float precoPorPagina, boolean emCores) {
