@@ -1,17 +1,20 @@
-import java.util.HashMap;
-import java.util.Random;
+import java.util.ArrayList;
 
 public class Grafica {
     public float precoPorPaginaColorida;
     public float precoPorPaginaPB;
-    protected HashMap<Integer, Impressora> impressoras;
+    protected ArrayList<Impressora> impressoras;
+    protected revezamento;
 
     public Grafica (){
-        impressoras = new HashMap<Integer, Impressora>();
+        impressoras = new ArrayList<>();
     }
 
     protected void imprimirDocumento(Documento documento) {
-            //ToDo
+        if (revezamento == impressoras.size()) //zerar a ordem
+            revezamento = 0;
+        impressoras.get(revezamento).imprimirDocumento(documento);
+        revezamento++;
     }
 
     protected float orcarImpressao(Documento documento) {
