@@ -22,8 +22,7 @@ public class Jogador {
     public Jogador(String username, String senha) {
         this.username = username;
         this.senha = senha;
-        this.pontuacao = PONTUACAO_INICIAL;]
-        
+        this.pontuacao = PONTUACAO_INICIAL;
         this.online = false;
         this.jogando = false;
         this.minhasPartidas = new ArrayList<>();

@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -36,27 +35,22 @@ public class JogoOnline {
         return this.jogadorByUsername.get(username);
     }
 
-    public void fazerLogin(String username, String senha) {
+    public void fazerLogin(String username, String senha) throws UsuarioInexistenteException, SenhaInvalidaException {
         Jogador jogador = encontrarJogador(username);
-        if (jogador != null) {
-            try{
-                jogador.getSenha().equals(senha);
-                jogador.setOnline(true);
-            } catch (Exception e) {
-                throw new SenhaInvalidaException("Senha inválida");
-            }
-        } else {
-            throw new JogadorInexistenteException("Jogador inexistente"); 
-        }
+
+        if(jogador == null)
+            throw new UsuarioInexistenteException("Jogador inexistente");
+
+        if(jogador.getSenha().equals(senha))
+            jogador.setOnline(true);
+        else
+            throw new SenhaInvalidaException("Senha inválida");
     }
 
-    public void fazerLogout(Jogador jogador) {
-        try{
-            jogador.setOnline(false);
-        } catch (Exception e){
-            if(!jogador.isOnline())
-                throw new Exception("O jogador não está online para fazer logout.");       
-        }
+    public void fazerLogout(Jogador jogador) throws RuntimeException {
+        if(!jogador.isOnline())
+                throw new RuntimeException("Partida já encerrada!");
+        jogador.setOnline(false);
     }
 
     public Partida iniciarPartida(Jogador jogador1, Jogador jogador2) {
@@ -75,13 +69,6 @@ public class JogoOnline {
         return novaPartida;
     }
 
-    /**
-     * Encerra uma partida em andamento.
-     *
-     * @param partida Uma partida em andamento
-     * @param resultado O resultado da partida que será encerrada:
-     *                  0 (empate), 1 (vitória do jogador 1) ou 2 (vitória do jogador 2)
-     */
     public void encerrarPartida(Partida partida, int resultado) {
         if (partida.getResultado() != Partida.PARTIDA_EM_ANDAMENTO) {
             // a partida não está em andamento, não posso atribuir resultado!
@@ -107,18 +94,8 @@ public class JogoOnline {
         jogador2.setJogando(false);
     }
 
-    /**
-     * Escolhe um adversário aleatório que esteja online e não esteja jogando,
-     * distinto do jogador solicitante.
-     *
-     * @param solicitante o jogador solicitante
-     *
-     * @return O adversário escolhido, se encontrar algum;
-     *         ou null, caso não encontre nenhum que atenda às condições
-     */
     public Jogador escolherAdversario(Jogador solicitante) {
         int numeroAleatorio = this.random.nextInt(this.jogadorByUsername.size());
-
         int cont = 0;
 
         for (Jogador adversario : this.jogadorByUsername.values()) {
