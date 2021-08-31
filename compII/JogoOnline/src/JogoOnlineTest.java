@@ -70,7 +70,7 @@ public class JogoOnlineTest {
             jogo.fazerLogin("joao", "1234");
             jogo.fazerLogin("maria", "3456");
         } catch (SenhaInvalidaException | UsuarioInexistenteException e){
-
+            System.out.println("Usuário inexistente ou senha incorreta");
         }
 
         // sanity check
@@ -94,7 +94,7 @@ public class JogoOnlineTest {
         try{
             jogo.fazerLogin("maria", "3456");
         } catch (SenhaInvalidaException | UsuarioInexistenteException e){
-
+            System.out.println("Usuário inexistente ou senha incorreta");
         }
 
         assertTrue(jogadoraMaria.isOnline());
@@ -102,7 +102,7 @@ public class JogoOnlineTest {
         try{
             jogo.fazerLogout(jogadoraMaria);
         } catch (RuntimeException e) {
-
+            System.out.println("Impossível deslogar jogador offline");
         }
         
         assertFalse(jogadoraMaria.isOnline());
