@@ -1,0 +1,138 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
+
+public class JogoOnline {
+
+    public static final int PONTOS_VITORIA = 1;
+    public static final int PONTOS_EMPATE = 0;
+    public static final int PONTOS_DERROTA = -1;
+
+    private Random random;
+
+    private HashMap<String, Jogador> jogadorByUsername; 
+
+
+    public JogoOnline() {
+        this.random = new Random();
+        this.jogadorByUsername = new HashMap<>();
+    }
+
+
+    public Jogador cadastrarJogador(String username, String senha) {
+        if (encontrarJogador(username) != null) {
+            return null;  // usuário já cadastrado
+        }
+
+        Jogador novoJogador = new Jogador(username);
+        novoJogador.setSenha(senha);
+
+        this.jogadorByUsername.put(username, novoJogador);
+
+        return novoJogador;
+    }
+
+    private Jogador encontrarJogador(String username) {
+        return this.jogadorByUsername.get(username);
+    }
+
+    public void fazerLogin(String username, String senha) {
+        Jogador jogador = encontrarJogador(username);
+        if (jogador != null) {
+            try{
+                jogador.getSenha().equals(senha);
+                jogador.setOnline(true);
+            } catch (Exception e) {
+                throw new SenhaInvalidaException("Senha inválida");
+            }
+        } else {
+            throw new JogadorInexistenteException("Jogador inexistente"); 
+        }
+    }
+
+    public void fazerLogout(Jogador jogador) {
+        try{
+            jogador.setOnline(false);
+        } catch (Exception e){
+            if(!jogador.isOnline())
+                throw new Exception("O jogador não está online para fazer logout.");       
+        }
+    }
+
+    public Partida iniciarPartida(Jogador jogador1, Jogador jogador2) {
+        if (jogador1 == null || jogador2 == null ||
+                !jogador1.isOnline() || jogador1.isJogando() ||
+                !jogador2.isOnline() || jogador2.isJogando()) {
+            return null;
+        }
+
+        Partida novaPartida = new Partida(jogador1, jogador2);
+        jogador1.setJogando(true);
+        jogador2.setJogando(true);
+
+        novaPartida.setResultado(Partida.PARTIDA_EM_ANDAMENTO);
+
+        return novaPartida;
+    }
+
+    /**
+     * Encerra uma partida em andamento.
+     *
+     * @param partida Uma partida em andamento
+     * @param resultado O resultado da partida que será encerrada:
+     *                  0 (empate), 1 (vitória do jogador 1) ou 2 (vitória do jogador 2)
+     */
+    public void encerrarPartida(Partida partida, int resultado) {
+        if (partida.getResultado() != Partida.PARTIDA_EM_ANDAMENTO) {
+            // a partida não está em andamento, não posso atribuir resultado!
+            throw new RuntimeException("Partida já encerrada!");
+        }
+
+        if (resultado != Partida.EMPATE &&
+                resultado != Partida.VITORIA_JOGADOR_1 &&
+                resultado != Partida.VITORIA_JOGADOR_2) {
+            throw new IllegalArgumentException("Resultado inválido");
+            // a IllegalArgumentException é uma RuntimeException (herança)
+        }
+
+        partida.setResultado(resultado);
+
+        Jogador jogador1 = partida.getJogador1();
+        Jogador jogador2 = partida.getJogador2();
+
+        jogador1.adicionarPartidaJogada(partida);
+        jogador2.adicionarPartidaJogada(partida);
+
+        jogador1.setJogando(false);
+        jogador2.setJogando(false);
+    }
+
+    /**
+     * Escolhe um adversário aleatório que esteja online e não esteja jogando,
+     * distinto do jogador solicitante.
+     *
+     * @param solicitante o jogador solicitante
+     *
+     * @return O adversário escolhido, se encontrar algum;
+     *         ou null, caso não encontre nenhum que atenda às condições
+     */
+    public Jogador escolherAdversario(Jogador solicitante) {
+        int numeroAleatorio = this.random.nextInt(this.jogadorByUsername.size());
+
+        int cont = 0;
+
+        for (Jogador adversario : this.jogadorByUsername.values()) {
+            if (cont >= numeroAleatorio) {
+                if (adversario.isOnline() &&
+                    !adversario.isJogando() &&
+                    !adversario.equals(solicitante)) {
+                    return adversario;
+                }
+            }
+            cont++;
+        }
+        return null;
+    }
+
+    
+}
