@@ -37,8 +37,10 @@ public class JogoOnlineTest {
         try{
             jogo.fazerLogin("joao", "1234");
             fail("Deverá lançar uma UsuarioInexistenteException");
-        } catch (UsuarioInexistenteException | SenhaInvalidaException e){
+        } catch (UsuarioInexistenteException e) {
             System.out.println(e);
+        } catch (SenhaInvalidaException e) {
+            System.out.println("Senha incorreta.");
         }
     }
 
@@ -55,7 +57,7 @@ public class JogoOnlineTest {
         } catch (UsuarioInexistenteException e) {
             System.out.println("Usuário inexistente.");
         } catch (SenhaInvalidaException e) {
-            System.out.println("Senha inválida.");
+            System.out.println(e);
         }
 
         assertFalse(jogadorJoao.isOnline());
@@ -69,8 +71,8 @@ public class JogoOnlineTest {
         try {
             jogo.fazerLogin("joao", "1234");
             jogo.fazerLogin("maria", "3456");
-        } catch (SenhaInvalidaException | UsuarioInexistenteException e){
-            System.out.println("Usuário inexistente ou senha incorreta");
+        } catch (SenhaInvalidaException | UsuarioInexistenteException e){ //tratamento de ambos os erros será igual.
+            System.out.println(e);
         }
 
         // sanity check
