@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/compII/Fracao/Fracao.iml" filepath="$PROJECT_DIR$/compII/Fracao/Fracao.iml" />
       <module fileurl="file://$PROJECT_DIR$/compII/Grafica/Grafica.iml" filepath="$PROJECT_DIR$/compII/Grafica/Grafica.iml" />
       <module fileurl="file://$PROJECT_DIR$/compII/JogoOnline/JogoOnline.iml" filepath="$PROJECT_DIR$/compII/JogoOnline/JogoOnline.iml" />
+      <module fileurl="file://$PROJECT_DIR$/compII/Sorteador/Sorteador.iml" filepath="$PROJECT_DIR$/compII/Sorteador/Sorteador.iml" />
       <module fileurl="file://$PROJECT_DIR$/compII/helloWorld/helloWorld.iml" filepath="$PROJECT_DIR$/compII/helloWorld/helloWorld.iml" />
     </modules>
   </component>
