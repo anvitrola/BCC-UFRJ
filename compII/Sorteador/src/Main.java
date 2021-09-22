@@ -3,10 +3,6 @@ import controles.DadosTriplos;
 
 public class Main {
     public static void main(String[] args) {
-        int vitoriasJogador1 = 0;
-        int vitoriasJogador2 = 0;
-        int empates = 0;
-
         for (int numeroDeRodadas = 1; numeroDeRodadas <= 100000; numeroDeRodadas *= 2) {
             JogoMalucoComSorteadores joguinho = new JogoMalucoComSorteadores(new DadosDeGamao(), new DadosTriplos(),
                     "Gusmão", "Ana", 100000);
