@@ -2,21 +2,39 @@ import controles.DadosDeGamao;
 import controles.DadosTriplos;
 
 public class Main {
+    private static final int CONT_REPETICOES_POR_SIMULACAO = 1_000_000;
+
+    private static DadosDeGamao dadosDeGamao = new DadosDeGamao();
+    private static DadosTriplos dadosTriplos = new DadosTriplos();
+
+    private static void obterPercentuaisEmpiricos(int numeroDeRodadasPorPartida){
+        JogoMalucoComSorteadores<DadosDeGamao, DadosTriplos> joguinho;
+
+        joguinho = new JogoMalucoComSorteadores<>(
+            dadosDeGamao, dadosTriplos, "Gusmão", "Ana", 1000 
+        );
+
+        for (int i = 0; i < CONT_REPETICOES_POR_SIMULACAO; i++) {
+            jogoMaluco.jogar();
+        }
+
+
+        System.out.println(String.format("\n\n" +
+                "      Para partidas com %d rodada(s):\n" +
+                "      Vitórias do Jogador 1: %f%%\n" +
+                "      Vitórias do Jogador 2: %f%%\n" +
+                "      Empates: %f%%",
+                numeroDeRodadasPorPartida,
+                jogoMaluco.getPercentualVitoriasJogador1(),
+                jogoMaluco.getPercentualVitoriasJogador2(),
+                jogoMaluco.getPercentualEmpates()
+        ));
+    }
+
     public static void main(String[] args) {
-        for (int numeroDeRodadas = 1; numeroDeRodadas <= 100000; numeroDeRodadas *= 2) {
-            JogoMalucoComSorteadores joguinho = new JogoMalucoComSorteadores(new DadosDeGamao(), new DadosTriplos(),
-                    "Gusmão", "Ana", 100000);
 
-            joguinho.jogar();
-
-            System.out.println(joguinho.obterResultadoUltimoJogo());
-
-            System.out.printf(
-                "Vitórias do Jogador 1: %.2f%c\nVitórias do Jogador 2: %.2f%c\nEmpates: %.2f%c\n",
-                    joguinho.getPercentualVitoriasJogador1(),
-                    joguinho.getPercentualVitoriasJogador2(),
-                    joguinho.getPercentualEmpates()
-            );
+        for (int numeroDeRodadas = 1; numeroDeRodadas <= 1000000; numeroDeRodadas++) {
+            obterPercentuaisEmpiricos(numeroDeRodadas);
         }
     }
 }

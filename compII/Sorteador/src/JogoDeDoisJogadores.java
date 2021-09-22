@@ -1,26 +1,38 @@
 import java.util.ArrayList;
 
+import org.graalvm.compiler.nodes.NodeView.Default;
+
 public abstract class JogoDeDoisJogadores {
     public String nomeJogo;
     public String nomeJogador1;
     public String nomeJogador2;
     public int numeroDeRodadas;
 
-    public static final int EMPATE = 0;
-    public static final int VITORIA_JOGADOR_1 = 1;
-    public static final int VITORIA_JOGADOR_2 = 2;
+    enum Resultado {
+        EMPATE, VITORIA_JOGADOR_1, VITORIA_JOGADOR_2
+    }
 
     public ArrayList<Partida> historicoResultados;
+
+    private int contPartidasVencidasPeloJogador1;
+    private int contPartidasVencidasPeloJogador2;
+    private int contPartidasEmpatadas;
 
     public JogoDeDoisJogadores(String nomeJogo, String nomeJogador1, String nomeJogador2, int numeroDeRodadas) {
         this.nomeJogo = nomeJogo;
         this.nomeJogador1 = nomeJogador1;
         this.nomeJogador2 = nomeJogador2;
         this.numeroDeRodadas = numeroDeRodadas;
+
         this.historicoResultados = new ArrayList<>();
+
+        this.contPartidasVencidasPeloJogador1 = 0;
+        this.contPartidasVencidasPeloJogador2 = 0;
+        this.contPartidasEmpatadas = 0;
+
     }
 
-    protected abstract int executarRodadaDoJogo();
+    protected abstract Resultado executarRodadaDoJogo();
 
     public String getNomeJogo() {
         return this.nomeJogo;
@@ -38,31 +50,42 @@ public abstract class JogoDeDoisJogadores {
         return this.numeroDeRodadas;
     }
 
-    public String jogar() {
+    public Resultado jogar() {
         int pontosJogador1 = 0;
         int pontosJogador2 = 0;
 
         while (numeroDeRodadas > 0) {
-            int resultadoDaRodada = executarRodadaDoJogo();
-            historicoResultados.add(resultadoDaRodada);
+            Resultado resultadoDaRodada = executarRodadaDoJogo();
+
+            switch (resultadoDaRodada) {
+                case VITORIA_JOGADOR_1:
+                    pontosJogador1++;
+                    break;
+                case VITORIA_JOGADOR_2:
+                    pontosJogador2++;
+                    break;
+            }
             numeroDeRodadas--;
         }
 
-        for (int i = 0; i < historicoResultados.size(); i++) {
-            if (historicoResultados.get(i) == 1)
-                pontosJogador1++;
-            else if (historicoResultados.get(i) == 2)
-                pontosJogador2++;
+        Partida partidaTerminada = new Partida(pontosJogador1, pontosJogador2,
+                this.numeroDeRodadas - pontosJogador1 - pontosJogador2);
+        
+        this.historicoResultados.add(partidaTerminada);
+        Resultado resultadoFinalDaPartida = partidaTerminada.getResultado();
+
+        switch (resultadoFinalDaPartida) {
+            case VITORIA_JOGADOR_1:
+                this.contPartidasVencidasPeloJogador1++;
+                break;
+            case VITORIA_JOGADOR_2:
+                this.contPartidasVencidasPeloJogador2++;
+                break;
+            case EMPATE: default:
+                this.contPartidasEmpatadas++;
         }
 
-        if (pontosJogador1 > pontosJogador2)
-            return String.format("O(A) jogador(a) %s venceu o jogo por %d a %d.", nomeJogador1, pontosJogador1,
-                    pontosJogador2);
-        else if (pontosJogador1 < pontosJogador2)
-            return String.format("O(A) jogador(a) %s venceu o jogo por %d a %d.", nomeJogador2, pontosJogador2,
-                    pontosJogador1);
-
-        return String.format("O jogo terminou em empate após %d rodadas.", numeroDeRodadas);
+        return resultadoFinalDaPartida;
     }
 
     public String obterResultadoUltimoJogo() {
@@ -99,30 +122,36 @@ public abstract class JogoDeDoisJogadores {
         }
     }
 
-    public float getPercentualVitoriasJogador1() {
-        Partida ultimaPartida = this.historicoResultados.get(this.historicoResultados.size() - 1);
-        return (ultimaPartida.contRodadasVencidasJogador1 / numeroDeRodadas) * 100;
+    public double getPercentualVitoriasJogador1() {
+        return (this.contPartidasVencidasPeloJogador1 / this.numeroDeRodadas) * 100.0;
     }
 
-    public float getPercentualVitoriasJogador2() {
-        Partida ultimaPartida = this.historicoResultados.get(this.historicoResultados.size() - 1);
-        return (ultimaPartida.contRodadasVencidasJogador2 / numeroDeRodadas) * 100;
+    public double getPercentualVitoriasJogador2() {
+        return (this.contPartidasVencidasPeloJogador2 / this.numeroDeRodadas) * 100.0;
     }
 
-    public float getPercentualEmpates() {
-        Partida ultimaPartida = this.historicoResultados.get(this.historicoResultados.size() - 1);
-        return (ultimaPartida.contEmpates / numeroDeRodadas) * 100;
+    public double getPercentualEmpates() {
+        return (this.contPartidasEmpatadas / this.numeroDeRodadas) * 100.0;
     }
 
     private class Partida {
         final int contRodadasVencidasJogador1;
         final int contRodadasVencidasJogador2;
-        final int contEmpates;
 
         Partida(int contRodadasVencidasJogador1, int contRodadasVencidasJogador2, int contEmpates) {
             this.contRodadasVencidasJogador1 = contRodadasVencidasJogador1;
             this.contRodadasVencidasJogador2 = contRodadasVencidasJogador2;
             this.contEmpates = contEmpates;
         }
+
+        Resultado getResultado() {
+            if (contRodadasVencidasJogador1 > contRodadasVencidasJogador2) {
+                return Resultado.VITORIA_JOGADOR_1;
+            } else if (contRodadasVencidasJogador1 < contRodadasVencidasJogador2) {
+                return Resultado.VITORIA_JOGADOR_2;
+            }
+            return Resultado.EMPATE;
+        }
+
     }
 }
