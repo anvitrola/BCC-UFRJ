@@ -11,6 +11,7 @@ public class Usuario {
     private String endereco;
 
     private Set<Livro> objetosADevolver = new HashSet<>();
+    protected int QTD_LIVROS_DEVIDOS = 0;
 
     public Usuario(String nome, long cpf) {
         this.nome = nome;
@@ -30,7 +31,7 @@ public class Usuario {
     }
 
     public int getQuantidadeLivrosDevidos(){
-        return this.objetosADevolver.size();
+        return QTD_LIVROS_DEVIDOS;
     }
 
     public void setNome(String nome) {
@@ -43,15 +44,30 @@ public class Usuario {
 
     public void devolverLivro( Livro livro) {
         objetosADevolver.remove(livro);
+        QTD_LIVROS_DEVIDOS--;
     }
 
     public void emprestarLivro (Livro livro) {
         objetosADevolver.add(livro);
+        QTD_LIVROS_DEVIDOS++;
     }
 
     public boolean possuiObjeto (Object obj){
         if(objetosADevolver.contains(obj))
             return true;
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Usuario)) return false;
+        Usuario usuario = (Usuario) o;
+        return cpf == usuario.cpf;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cpf);
     }
 }

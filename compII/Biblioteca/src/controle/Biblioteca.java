@@ -60,7 +60,7 @@ public class Biblioteca {
         if(!usuarios.containsKey(usuario.getCpf()))
             throw new UsuarioNaoCadastradoException();
 
-        if(usuario.getQuantidadeLivrosDevidos() > MAX_LIVROS_DEVIDOS || qtdCopiasLivroRequisitado == 1)
+        if(usuario.getQuantidadeLivrosDevidos() >= MAX_LIVROS_DEVIDOS || qtdCopiasLivroRequisitado == 1)
             throw new LimiteEmprestimosExcedidoException();
 
         usuario.emprestarLivro(livro);
@@ -73,7 +73,8 @@ public class Biblioteca {
 
     public void receberDevolucaoLivro(Livro livro, Usuario usuario) throws DevolucaoInvalidaException {
         int qtdCopiasLivroRequisitado = acervo.get(livro);
-
+        if(!usuario.possuiObjeto(livro))
+            throw new DevolucaoInvalidaException();
         usuario.devolverLivro(livro);
         acervo.replace(livro, qtdCopiasLivroRequisitado++);
     }
