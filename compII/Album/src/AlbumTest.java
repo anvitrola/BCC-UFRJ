@@ -6,11 +6,10 @@ import static org.junit.Assert.*;
 public class AlbumTest {
 
     private Album<Figurinha> albumFigurinhas;
-
     private static final int TAMANHO_DO_ALBUM = 300;
     private static final int ITENS_POR_PACOTE = 3;
 
-    @Before  // roda antes de cada teste
+    @Before
     public void setUp() {
         this.albumFigurinhas = new Album<>(TAMANHO_DO_ALBUM, ITENS_POR_PACOTE);
     }

@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Album<T extends Colecionavel> {
-
     public int tamanhoDoAlbum;
     public int quantItensPorPacotinho;
 
