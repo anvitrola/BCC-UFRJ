@@ -2,18 +2,6 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Esta classe implementa um álbum (de figurinhas, selos, etc.) online, permitindo
- * colecionar itens que possuem uma posição específica no álbum.
- *
- * Itens são acrescentados ao álbum por meio de "pacotinhos" contendo uma quantidade
- * fixa, pré-feterminada de itens.
- *
- * Itens já existentes no álbum e recebidos novamente em pacotinhos posteriores são
- * armazenados para eventuais trocas com outro usuários.
- *
- * @param <T> o tipo de objeto colecionável que o álbum irá armazenar
- */
 public class Album<T extends Colecionavel> {
 
     public int tamanhoDoAlbum;
@@ -31,7 +19,6 @@ public class Album<T extends Colecionavel> {
     }
 
     public void receberNovoPacotinho(Pacotinho<T> pacotinho) throws PacotinhoInvalidoException {
-        int figurinhasNoPacotinho = pacotinho.getFigurinhas().size();
         ArrayList<T> figurinhasDoPacotinho = pacotinho.getFigurinhas();
 
         if(!(pacotinho.getFigurinhas().size() == quantItensPorPacotinho))
@@ -45,9 +32,8 @@ public class Album<T extends Colecionavel> {
         for(T figurinha : figurinhasDoPacotinho){
             int posicao = figurinha.getPosicao();
 
-            if(figurinhasColadas.containsKey(posicao)){
+            if(figurinhasColadas.containsKey(posicao))
                 figurinhasRepetidas.add(figurinha);
-            }
 
             figurinhasColadas.put(posicao, figurinha);
         }
