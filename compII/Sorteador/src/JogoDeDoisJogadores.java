@@ -141,7 +141,6 @@ public abstract class JogoDeDoisJogadores {
         Partida(int contRodadasVencidasJogador1, int contRodadasVencidasJogador2, int contEmpates) {
             this.contRodadasVencidasJogador1 = contRodadasVencidasJogador1;
             this.contRodadasVencidasJogador2 = contRodadasVencidasJogador2;
-            this.contEmpates = contEmpates;
         }
 
         Resultado getResultado() {

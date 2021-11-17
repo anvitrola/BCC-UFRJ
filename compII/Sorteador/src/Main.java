@@ -15,7 +15,7 @@ public class Main {
         );
 
         for (int i = 0; i < CONT_REPETICOES_POR_SIMULACAO; i++) {
-            jogoMaluco.jogar();
+            joguinho.jogar();
         }
 
 
@@ -25,9 +25,9 @@ public class Main {
                 "      Vitórias do Jogador 2: %f%%\n" +
                 "      Empates: %f%%",
                 numeroDeRodadasPorPartida,
-                jogoMaluco.getPercentualVitoriasJogador1(),
-                jogoMaluco.getPercentualVitoriasJogador2(),
-                jogoMaluco.getPercentualEmpates()
+                joguinho.getPercentualVitoriasJogador1(),
+                joguinho.getPercentualVitoriasJogador2(),
+                joguinho.getPercentualEmpates()
         ));
     }
 
