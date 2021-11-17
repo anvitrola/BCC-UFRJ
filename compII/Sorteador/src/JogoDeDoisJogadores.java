@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 
-import org.graalvm.compiler.nodes.NodeView.Default;
-
 public abstract class JogoDeDoisJogadores {
     public String nomeJogo;
     public String nomeJogador1;
